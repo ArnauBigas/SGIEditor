@@ -18,6 +18,7 @@
 #include <QPushButton>
 #include <QStatusBar>
 #include <QLabel>
+#include <QHeaderView>
 
 #include "MainWindow.h"
 
@@ -52,6 +53,10 @@ MainWindow::MainWindow() {
     objectProperties->setColumnCount(2);
     objectProperties->setRowCount(8);
     objectProperties->setHorizontalHeaderLabels({"Property", "Value"});
+    objectProperties->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    objectProperties->verticalHeader()->hide();
+    objectProperties->horizontalHeader()->setStretchLastSection(true);
+    worldObjects->setHeaderLabel("World Objects");
     layout2->addWidget(layout3Container);
     layout3Container->setLayout(layout3);
     layout2Container->setLayout(layout2);
