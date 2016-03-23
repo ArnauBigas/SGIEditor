@@ -1,0 +1,45 @@
+/* 
+    Created on : Mar 23, 2016, 12:06:14 PM
+    Author     : arnaubigas
+*/
+
+QMainWindow, QAbstractItemView  {
+    background-color: #666666;
+}
+
+QMenuBar {
+    background-color: #444444;
+}
+
+QMenuBar::item {
+    background-color: #444444;
+    color: #FFFFFF;
+}
+
+QMenuBar::item:selected {
+    background-color: #333333;
+}
+
+QMenu {
+    background-color: #555555;
+    color: #FFFFFF;
+}
+
+QMenu::item:selected {
+    background-color: #444444;
+}
+
+QTableView {
+    alternate-background-color: #777777;
+}
+
+#toolbar::item {
+    background-color: #505050;
+    border: 1px solid #AAAAAA;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+QLabel {
+    color: #FFFFFF;
+}
