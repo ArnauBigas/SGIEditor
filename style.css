@@ -33,11 +33,20 @@ QTableView {
     alternate-background-color: #777777;
 }
 
+#toolbar {
+    border-top: 1px solid #666666;
+    padding-top: 4px;
+}
+
 #toolbar::item {
     background-color: #505050;
     border: 1px solid #AAAAAA;
     border-radius: 5px;
     padding: 2px;
+}
+
+#toolbar::item:selected {
+    background-color: #606060;
 }
 
 QLabel {

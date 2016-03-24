@@ -15,7 +15,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QListWidget>
 #include <QTreeWidget>
 #include <QTableWidget>
 #include "ViewportWidget.h"
@@ -34,7 +33,9 @@ private:
     QMenuBar* toolbar;
 
     //Main window stuff
-    QListWidget* availableObjects;
+    QTreeWidget* props;
+    QTreeWidget* walls;
+    QTreeWidget* floors;
     QTreeWidget* worldObjects;
     QTableWidget* objectProperties;
     ViewportWidget* viewport;
