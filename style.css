@@ -58,3 +58,7 @@ QHeaderView::section {
     border: none;
     padding: 4px;
 }
+
+QStatusBar::item {
+    border: none;
+}
