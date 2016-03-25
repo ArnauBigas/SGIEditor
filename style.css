@@ -1,54 +1,60 @@
-/* 
-    Created on : Mar 23, 2016, 12:06:14 PM
-    Author     : arnaubigas
-*/
-
-QMainWindow, QAbstractItemView  {
-    background-color: #666666;
+QMainWindow, QAbstractItemView  { /*Background*/
+    background-color: rgb(27, 27, 28);
+    margin: 2px;
 }
 
-QMenuBar {
-    background-color: #444444;
+QMenuBar { /*Top bit*/
+    background-color: rgb(30, 36, 40);
 }
 
-QMenuBar::item {
-    background-color: #444444;
-    color: #FFFFFF;
+QMenuBar::item { /*File, etc*/
+    background-color: rgb(30, 36, 40);
+    color: #FFF;
 }
 
 QMenuBar::item:selected {
-    background-color: #333333;
+    background-color: rgb(36, 42, 47);
 }
 
-QMenu {
-    background-color: #555555;
-    color: #FFFFFF;
+QMenu { /*Drop down menu*/
+    background-color: rgb(44, 44, 44);
+    color: #FFF;
 }
 
 QMenu::item:selected {
-    background-color: #444444;
-}
-
-QTableView {
-    alternate-background-color: #777777;
+    background-color: rgb(53, 53, 53);
 }
 
 #toolbar {
-    border-top: 1px solid #666666;
-    padding-top: 4px;
+    background-color: rgb(37, 45, 51);
+    padding: 3px;
 }
 
-#toolbar::item {
-    background-color: #505050;
-    border: 1px solid #AAAAAA;
-    border-radius: 5px;
-    padding: 2px;
+#toolbar::item { /*Object buttons*/
+    background-color: rgb(37, 45, 51);
+    padding: 5px;
+    margin: 2px;
 }
 
 #toolbar::item:selected {
-    background-color: #606060;
+    border-bottom: 2px solid rgb(15, 63, 128);
+    padding-bottom: 3px;
 }
 
 QLabel {
-    color: #FFFFFF;
+    color: #FFF;
+}
+
+QTableView, QTreeWidget { /*Panel things*/
+    background-color: rgb(31, 33, 35);
+    alternate-background-color: rgb(35, 37, 39);
+    border: 1px solid rgb(35, 35, 35);
+    border-radius: 2px;
+}
+
+QHeaderView::section {
+    background-color: rgb(30, 36, 40);
+    color: #FFF;
+    border: none;
+    padding: 4px;
 }
