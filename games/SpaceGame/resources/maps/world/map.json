@@ -1,0 +1,175 @@
+{
+    "objects":[
+        {
+            "type":"wall:vanilla:standard",
+            "position":[0, 0, 0],
+            "rotation":[0, 0, 0],
+            "points":[
+                [0, 0, 8],
+                [0, 0, 10],
+                [14, 0, 10],
+                [18, 0, 6],
+                [18, 0, 0],
+                [14, 0, -4],
+                [0, 0, -4],
+                [0, 0, -2]
+            ]
+        },
+        {
+            "type":"wall:vanilla:standard",
+            "position":[0, 0, 0],
+            "rotation":[0, 0, 0],
+            "points":[
+                [0, 0, 0],
+                [0, 0, 6]
+            ]
+        },
+        {
+            "type":"prop:vanilla:monitor",
+            "position":[12, 1, 1],
+            "rotation":[0, 180, 0],
+            "modules":{
+                "monitor":{"computer":0}
+            }
+        },
+        {
+            "type":"prop:vanilla:monitor",
+            "position":[12, 1, 5],
+            "rotation":[0, 180, 0],
+            "modules":{
+                "monitor":{"computer":0}
+            }
+        },
+        {
+            "type":"prop:vanilla:monitor",
+            "position":[8, 1, 1],
+            "rotation":[0, 180, 0],
+            "modules":{
+                "monitor":{"computer":0}
+            }
+        },
+        {
+            "type":"prop:vanilla:monitor",
+            "position":[8, 1, 5],
+            "rotation":[0, 180, 0],
+            "modules":{
+                "monitor":{"computer":0}
+            }
+        },
+                        {
+            "type":"prop:vanilla:floppy",
+            "position":[2, 0, 2],
+            "rotation":[0, 0, 0],
+            "modules":{
+            }
+        },
+        {
+            "type":"prop:vanilla:monkey",
+            "position":[4, 1, 3],
+            "rotation":[0, 0, 0],
+            "modules":{
+                "CPU":{
+                    "computer":0,
+                    "file":"resources/maps/world/program.dat"
+                }
+            }
+        },
+        {
+            "type":"prop:vanilla:speaker",
+            "position":[5, 0, 5],
+            "rotation":[0, 0, 0],
+            "modules":{
+                "speaker":{
+                    "computer":0,
+                    "square":120,
+                    "sine":120,
+                    "saw":120,
+                    "muted":false
+                }
+            }
+        },
+        {
+            "type":"prop:vanilla:lightbulb",
+            "id":"light_ctrlroom0",
+            "position":[9, 2.5, 9],
+            "rotation":[180, 0, 0],
+            "modules":{
+                "lightEmitter":{
+                    "color":[1, 1, 1],
+                    "constantAttenuation":0.1,
+                    "linearAttenuation":0.05,
+                    "exponentialAttenuation":0.05
+                }
+            }
+        },
+        {
+            "type":"prop:vanilla:lightbulb",
+            "id":"light_ctrlroom1",
+            "position":[9, 2.5, 0],
+            "rotation":[180, 0, 0],
+            "modules":{
+                "lightEmitter":{
+                    "color":[1, 1, 1],
+                    "constantAttenuation":0.1,
+                    "linearAttenuation":0.05,
+                    "exponentialAttenuation":0.05
+                }
+            }
+        },
+        {
+            "type":"prop:vanilla:lightbulb",
+            "id":"light_ctrlroom2",
+            "position":[0, 2.5, 9],
+            "rotation":[180, 0, 0],
+            "modules":{
+                "lightEmitter":{
+                    "color":[1, 1, 1],
+                    "constantAttenuation":0.1,
+                    "linearAttenuation":0.05,
+                    "exponentialAttenuation":0.05
+                }
+            }
+        },
+        {
+            "type":"prop:vanilla:spotlight",
+            "position":[15, 1.5, 3],
+            "rotation":[0, 0, 90],
+            "modules":{
+                "lightEmitter":{
+                    "color":[1, 1, 1],
+                    "coneAngle":45,
+                    "constantAttenuation":0.1,
+                    "linearAttenuation":0.01,
+                    "exponentialAttenuation":0.01
+                }
+            }
+        },
+        {
+            "type":"prop:vanilla:camera",
+            "position":[5, 2, 5],
+            "rotation":[0, 0, 0],
+            "modules":{
+                "camera":{
+                    "computer":0
+                    }
+            }
+        },
+        {
+            "type":"prop:vanilla:blaster",
+            "position":[4,5,3],
+            "rotation":[0,0,0],
+            "modules":{}
+        },
+        {
+            "type":"prop:vanilla:switch",
+            "position":[1, 1, 1],
+            "rotation":[180, 0, 0],
+            "modules":{
+                "switch":{
+                    "lights":["light_ctrlroom0", "light_ctrlroom1", "light_ctrlroom2"],
+                    "switched":true
+                }
+            }
+        }        
+    ]
+}

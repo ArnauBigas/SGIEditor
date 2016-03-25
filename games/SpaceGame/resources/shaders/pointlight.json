@@ -1,0 +1,8 @@
+{
+	"vertexShader":"deferredQuad.vert",
+	"fragmentShader":"pointlight.frag",
+	"uniforms":["diffuseBuffer","normalBuffer","depthBuffer","invrVP",
+            "cameraPosition","materialBuffer","pointlight.position",
+            "pointlight.color","pointlight.constantAttenuation",
+            "pointlight.linearAttenuation", "pointlight.exponentialAttenuation"]
+}

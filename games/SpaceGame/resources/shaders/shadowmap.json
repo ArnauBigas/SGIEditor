@@ -1,0 +1,5 @@
+{
+	"vertexShader":"shadowmap.vert",
+	"fragmentShader":"shadowmap.frag",
+	"uniforms":["MVP"]
+}

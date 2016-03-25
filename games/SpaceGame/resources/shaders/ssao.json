@@ -1,0 +1,5 @@
+{
+	"vertexShader":"deferredQuad.vert",
+	"fragmentShader":"ssao.frag",
+	"uniforms":["normalBuffer","depthBuffer","invrVP","noiseTexture", "noiseScale", "kernel", "kernelSize","MVP"]
+}

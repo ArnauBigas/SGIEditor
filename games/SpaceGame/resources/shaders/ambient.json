@@ -1,0 +1,5 @@
+{
+	"vertexShader":"deferredQuad.vert",
+	"fragmentShader":"ambient.frag",
+	"uniforms":["diffuseBuffer","normalBuffer","depthBuffer","invrVP","materialBuffer","ambient","ssaoTexture","useSsao"]
+}

@@ -1,0 +1,14 @@
+[
+	{
+		"name":"on",
+        "mesh":"Switch",
+        "startKeyframe":0,
+        "endKeyframe":1
+	},
+    {
+        "name":"off",
+        "mesh":"Switch",
+        "startKeyframe":1,
+        "endKeyframe":2
+    }
+]

@@ -1,0 +1,5 @@
+{
+	"vertexShader":"gui.vert",
+	"fragmentShader":"gui.frag",
+	"uniforms":["MVP","guiTexture","modColor"]
+}

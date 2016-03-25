@@ -50,6 +50,7 @@ QTableView, QTreeWidget { /*Panel things*/
     alternate-background-color: rgb(35, 37, 39);
     border: 1px solid rgb(35, 35, 35);
     border-radius: 2px;
+    color: #FFF;
 }
 
 QHeaderView::section {

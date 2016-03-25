@@ -22,6 +22,12 @@
 class MainWindow : public QMainWindow {
 public:
     MainWindow();
+    
+    static MainWindow* getInstance();
+    
+    ViewportWidget* viewport;
+    
+    void updateAvailableObjects();
 private:
     //Menu stuff
     QMenu* file;
@@ -38,7 +44,6 @@ private:
     QTreeWidget* floors;
     QTreeWidget* worldObjects;
     QTableWidget* objectProperties;
-    ViewportWidget* viewport;
 };
 
 #endif /* MAINWINDOW_H */

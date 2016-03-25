@@ -1,0 +1,5 @@
+{
+	"vertexShader":"generic.vert",
+	"fragmentShader":"bumpmap.frag",
+	"uniforms":["MVP","diffuseTexture","Model","matDiffuse","normalTexture","shininess","specular","matEmission"]
+}

@@ -19,43 +19,27 @@
 #include <QStatusBar>
 #include <QLabel>
 #include <QHeaderView>
-#include <QDialog>
-#include <QComboBox>
-#include <SGIEngine/Utility.h>
-#include <QStringList>
+#include <QTreeWidgetItem>
+#include <SGIEngine/RenderEngine.h>
+#include <SGIEngine/WorldObject.h>
 
 #include "MainWindow.h"
+#include "GameDialog.h"
 
-static void showNewDialog(){
-    QDialog dialog;
-    QGridLayout layout;
-    QComboBox combo;
-    QPushButton accept("Accept");
-    QPushButton cancel("Cancel");
-    std::vector<std::string> gameDirs = getSubDirectories("games/");
-    QStringList games;
-    for(std::string s : gameDirs){
-        rapidjson::Document doc;
-        if(readJsonFile("games/"+s+"/gameInfo.json", doc)){
-            games << doc["name"].GetString();
-        } else {
-            games << s.c_str();
-        }
-    }
-    combo.addItems(games);
-    layout.addWidget(&combo, 0, 0, 1, 2);
-    layout.addWidget(&accept, 1, 0);
-    layout.addWidget(&cancel, 1, 1);
-    dialog.setLayout(&layout);
-    dialog.exec();
+MainWindow* instance;
+
+MainWindow* MainWindow::getInstance(){
+    return instance;
 }
 
 MainWindow::MainWindow() {
+    instance = this;
+    RenderEngine::init("SGI Editor");
     file = menuBar()->addMenu("&File");
     makeNew = file->addAction("&New");
     open = file->addAction("&Open");
     save = file->addAction("&Save");
-    connect(makeNew, &QAction::triggered, this, &showNewDialog);
+    connect(makeNew, &QAction::triggered, this, &showGameDialog);
     QWidget *mainContainer = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout;
     QHBoxLayout *layout2 = new QHBoxLayout;
@@ -113,3 +97,53 @@ MainWindow::MainWindow() {
     show();
 }
 
+void MainWindow::updateAvailableObjects(){
+    std::map<std::string, WorldObject*>& objs = getWorldObjectMap();
+    for(std::pair<std::string, WorldObject*> obj : objs){
+        int firstLimit = obj.first.find_first_of(":");
+        int lastLimit = obj.first.find_first_of(":", firstLimit + 1);
+        std::string type = obj.first.substr(0, firstLimit);
+        std::string domain = obj.first.substr(firstLimit + 1, lastLimit - firstLimit - 1);
+        std::string objName = obj.first.substr(lastLimit+1);
+        if (type == "prop") {
+            QList<QTreeWidgetItem*> domainList = props->findItems(QString::fromUtf8(domain.data(), domain.size()), Qt::MatchContains|Qt::MatchRecursive, 0);
+            QTreeWidgetItem* domainItem;
+            if(domainList.isEmpty()){
+                domainItem = new QTreeWidgetItem;
+                domainItem->setText(0, QString::fromUtf8(domain.data(), domain.size()));
+                props->addTopLevelItem(domainItem);
+            } else {
+                domainItem = domainList[0];
+            }
+            QTreeWidgetItem* item = new QTreeWidgetItem;
+            item->setText(0, QString::fromUtf8(objName.data(), objName.size()));
+            domainItem->addChild(item);
+        } else if (type == "wall") {
+            QList<QTreeWidgetItem*> domainList = walls->findItems(QString::fromUtf8(domain.data(), domain.size()), Qt::MatchContains|Qt::MatchRecursive, 0);
+            QTreeWidgetItem* domainItem;
+            if(domainList.isEmpty()){
+                domainItem = new QTreeWidgetItem;
+                domainItem->setText(0, QString::fromUtf8(domain.data(), domain.size()));
+                walls->addTopLevelItem(domainItem);
+            } else {
+                domainItem = domainList[0];
+            }
+            QTreeWidgetItem* item = new QTreeWidgetItem;
+            item->setText(0, QString::fromUtf8(objName.data(), objName.size()));
+            domainItem->addChild(item);
+        } else if (type == "floor") {
+            QList<QTreeWidgetItem*> domainList = floors->findItems(QString::fromUtf8(domain.data(), domain.size()), Qt::MatchContains|Qt::MatchRecursive, 0);
+            QTreeWidgetItem* domainItem;
+            if(domainList.isEmpty()){
+                domainItem = new QTreeWidgetItem;
+                domainItem->setText(0, QString::fromUtf8(domain.data(), domain.size()));
+                floors->addTopLevelItem(domainItem);
+            } else {
+                domainItem = domainList[0];
+            }
+            QTreeWidgetItem* item = new QTreeWidgetItem;
+            item->setText(0, QString::fromUtf8(objName.data(), objName.size()));
+            domainItem->addChild(item);
+        }
+    }
+}

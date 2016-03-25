@@ -1,0 +1,10 @@
+{
+	"vertexShader":"deferredQuad.vert",
+	"fragmentShader":"spotlight.frag",
+	"uniforms":["diffuseBuffer","normalBuffer","depthBuffer","invrVP",
+            "cameraPosition","materialBuffer","spotlight.position",
+            "spotlight.direction", "spotlight.coneAngle", "spotlight.color",
+            "spotlight.constantAttenuation", "spotlight.linearAttenuation",
+            "spotlight.exponentialAttenuation","shadowmapTexture","depthBiasVP",
+            "Model"]
+}

@@ -1,0 +1,19 @@
+{
+	"mass":1,
+	"shader":"bumpmap",
+    "physics":false,
+	"collider":{
+		"type":"sphere",
+		"position":[0, 0, 0],
+		"radius":1
+	},
+	"modules":[
+		{
+			"name":"monitor",
+			"mesh":"Monitor",
+			"polyGroup":0,
+			"width":320,
+			"height":200
+		}
+	]
+}

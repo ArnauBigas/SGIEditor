@@ -1,0 +1,18 @@
+{
+	"mass":1,
+	"shader":"generic",
+    "physics":false,
+	"collider":{
+		"type":"sphere",
+		"position":[0, 0, 0],
+		"radius":1
+	},
+	"modules":[
+		{
+			"name":"lightEmitter",
+			"type":"pointlight",
+                        "emissiveMesh":"Light",
+                        "emissivePolygroup":1
+		}
+	]
+}
