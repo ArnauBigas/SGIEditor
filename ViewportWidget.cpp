@@ -31,8 +31,3 @@ void ViewportWidget::paintGL() {
 void ViewportWidget::resizeGL(int width, int height){
     
 }
-
-QSize ViewportWidget::minimumSizeHint() const
-{
-    return QSize(50, 50);
-}
