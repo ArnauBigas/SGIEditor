@@ -17,6 +17,7 @@
 #include <QMainWindow>
 #include <QTreeWidget>
 #include <QTableWidget>
+#include <QLabel>
 #include "ViewportWidget.h"
 
 class MainWindow : public QMainWindow {
@@ -28,6 +29,9 @@ public:
     ViewportWidget* viewport;
     
     void updateAvailableObjects();
+    
+    //Status bar stuff
+    QLabel* position;
 private:
     //Menu stuff
     QMenu* file;

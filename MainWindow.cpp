@@ -17,7 +17,6 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QStatusBar>
-#include <QLabel>
 #include <QHeaderView>
 #include <QTreeWidgetItem>
 #include <SGIEngine/RenderEngine.h>
@@ -75,6 +74,8 @@ MainWindow::MainWindow() {
     worldObjects = new QTreeWidget;
     layout4->addWidget(worldObjects);
     layout4->addWidget(objectProperties);
+    objectProperties->setFocusPolicy(Qt::NoFocus);
+    objectProperties->setSelectionMode(QAbstractItemView::NoSelection);
     objectProperties->setAlternatingRowColors(true);
     objectProperties->setColumnCount(2);
     objectProperties->setRowCount(8);
@@ -89,8 +90,10 @@ MainWindow::MainWindow() {
     layout->addWidget(layout2Container);
     mainContainer->setLayout(layout);
     setCentralWidget(mainContainer);
+    position = new QLabel("Position: 0 0 0");
+    statusBar()->addPermanentWidget(position);
     statusBar()->addPermanentWidget(new QLabel("Objects: 0"));
-    
+    this->installEventFilter(viewport);
     setWindowTitle("SGI Editor");
     setMinimumSize(800, 600);
     resize(1280, 720);    

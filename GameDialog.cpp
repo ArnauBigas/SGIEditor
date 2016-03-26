@@ -17,8 +17,12 @@ std::vector<std::string> gameDirs;
 void acceptFunc(){
     dialog->close();
     setResourceLocation("games/"+gameDirs[combo->currentIndex()]+"/");
+    MainWindow::getInstance()->viewport->makeCurrent();
     loadAllResources();
     MainWindow::getInstance()->updateAvailableObjects();
+    MainWindow::getInstance()->viewport->world = new World();
+    MainWindow::getInstance()->viewport->world->addObject(getWorldObject("prop:vanilla:blaster"));
+    MainWindow::getInstance()->viewport->setupCamera();
 }
 
 void showGameDialog(){

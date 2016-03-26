@@ -13,16 +13,36 @@
 
 #include <GL/glew.h>
 #include <SGIEngine/ResourceEngine.h>
+#include <QMouseEvent>
+#include <QKeyEvent>
+#include <sstream>
+#include <SGIEngine/Logger.h>
 
 #include "ViewportWidget.h"
+#include "MainWindow.h"
 
 ViewportWidget::ViewportWidget(QWidget* parent)
-    : QGLWidget(parent) {
-    QGLFormat glFormat;
-    glFormat.setVersion( 3, 3 );
-    glFormat.setProfile( QGLFormat::CoreProfile );
-    glFormat.setSampleBuffers( true );
+    : QOpenGLWidget(parent) {
+    QSurfaceFormat glFormat;
+    glFormat.setVersion(3, 2);
+    glFormat.setProfile(QSurfaceFormat::CoreProfile);
+    glFormat.setSwapInterval(1);
+    glFormat.setDepthBufferSize(24);
+    glFormat.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
     setFormat(glFormat);
+    connect(&timer, &QTimer::timeout, this, &ViewportWidget::paintGL);
+    if(format().swapInterval() == -1) {
+        timer.setInterval(17);
+    } else {
+        timer.setInterval(17);
+    }
+    timer.start();
+}
+
+void ViewportWidget::setupCamera(){
+    camera = new Camera(world, new DeferredRendering(defaultFramebufferObject(), "final"));
+    camera->resize(this->width(), this->height());
+    world->addCamera(camera);
 }
 
 void ViewportWidget::initializeGL() {
@@ -31,13 +51,104 @@ void ViewportWidget::initializeGL() {
     if (err != GLEW_NO_ERROR) {
         fprintf(stderr, "GLEW Init Error: %s\n", glewGetErrorString(err));
     }
+    
+    //Clear error buffer
+    err = glGetError();
+
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_MULTISAMPLE);
+    glEnable(GL_BLEND);
+    glEnable(GL_SCISSOR_TEST);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    err = glGetError();
+    if (err != GL_NO_ERROR) {
+        Logger::error << "there was an error while initializing OpenGL:" << std::endl;
+        Logger::error << err << std::endl;
+    }
+    
     glClearColor(0.f, 0.f, 0.f, 0.f);
 }
 
 void ViewportWidget::paintGL() {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    if(world != 0){
+        if(active){
+            camera->yaw += (QCursor::pos().x() - lastX) * 0.1f;
+            camera->pitch += (QCursor::pos().y() - lastY) * 0.1f;
+            lastX = QCursor::pos().x();
+            lastY = QCursor::pos().y();
+            QCursor::setPos(this->pos());
+        }
+        makeCurrent();
+        world->renderWorld();
+    }
 }
 
 void ViewportWidget::resizeGL(int width, int height){
-    
+    if(camera != 0){
+        camera->resize(width, height);
+    }
+}
+
+bool ViewportWidget::eventFilter(QObject* object, QEvent* event){
+    if(camera == 0) return false;
+    if (event->type() == QEvent::MouseButtonPress){
+        grabMouse();
+        grabKeyboard();
+        setCursor(Qt::BlankCursor);
+        setMouseTracking(true);
+        active = true;
+    } else if(event->type() == QEvent::KeyPress){
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        float motionX = 0;
+        float motionY = 0;
+        float motionZ = 0;
+        float movSpeed = 1.0f;
+
+        switch(keyEvent->key()){
+            case Qt::Key_W:
+                motionX++;
+                break;
+            case Qt::Key_S:
+                motionX--;
+                break;
+            case Qt::Key_A:
+                motionZ--;
+                break;
+            case Qt::Key_D:
+                motionZ++;
+                break;
+            case Qt::Key_Space:
+                motionY++;
+                break;
+            case Qt::Key_C:
+                motionY--;
+                break;
+            case Qt::Key_Escape:
+                releaseKeyboard();
+                releaseMouse();
+                setCursor(Qt::ArrowCursor);
+                setMouseTracking(false);
+                active = false;
+                break;
+        }
+
+        glm::vec3 mov = glm::normalize(glm::vec3(
+            xTrig(motionX, motionZ, camera->yaw),
+            motionY,
+            zTrig(motionX, motionZ, camera->yaw))) * movSpeed;
+
+        if (glm::isnan(mov.x) || glm::isnan(mov.y) || glm::isnan(mov.z)) mov = glm::vec3(0.f, 0.f, 0.f);
+
+        camera->position += mov;
+    }
+    std::stringstream ss;
+    ss << "Position: ";
+    ss << camera->position.x; ss << " ";
+    ss << camera->position.y; ss << " ";
+    ss << camera->position.z;
+    MainWindow::getInstance()->position->setText(ss.str().c_str());
+    return false;
 }

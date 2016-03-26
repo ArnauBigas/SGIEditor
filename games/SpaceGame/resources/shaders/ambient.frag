@@ -8,7 +8,7 @@ uniform sampler2D ssaoTexture;
 
 uniform mat4 invrVP;
 uniform float useSsao;
-float ambient = 0.25;
+float ambient = 1;
 int blurSize = 4;
 
 in vec2 uv;
@@ -37,9 +37,10 @@ float ssao(){
 }
 
 void main(){
-    if(useSsao > 0.5){
+    /*if(useSsao > 0.5){
         color = vec4(texture2D(diffuseBuffer, uv).rgb, 1) * ((ambient * ssao()) + texture2D(materialBuffer, uv).b);
     } else {
         color = vec4(texture2D(diffuseBuffer, uv).rgb, 1) * (ambient + texture2D(materialBuffer, uv).b);
-    }
+    }*/
+    color = vec4(texture2D(diffuseBuffer, uv).rgb, 1);
 }

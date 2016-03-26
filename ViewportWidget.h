@@ -14,15 +14,28 @@
 #ifndef VIEWPORTWIDGET_H
 #define VIEWPORTWIDGET_H
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
+#include <QTimer>
+#include <SGIEngine/World.h>
 
-class ViewportWidget : public QGLWidget {
+class ViewportWidget : public QOpenGLWidget {
 public:
     ViewportWidget(QWidget* parent = 0);
+    void setupCamera();
+    World* world = 0;
 protected:
     void initializeGL();
     void paintGL();
     void resizeGL(int width, int height);
+    
+    bool eventFilter(QObject* object, QEvent* event) override;
+    
+private:
+    Camera* camera = 0;
+    QTimer timer;
+    int lastX;
+    int lastY;
+    bool active = false;
 };
 
 #endif /* VIEWPORTWIDGET_H */
