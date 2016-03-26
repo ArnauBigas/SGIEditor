@@ -76,10 +76,9 @@ void ViewportWidget::paintGL() {
             camera->pitch -= (QCursor::pos().y() - lastY);
             camera->yaw = fmod(camera->yaw, 360);
             camera->pitch = clamp(camera->pitch, -89.9f, 89.9f);
+            QCursor::setPos(mapToGlobal(QPoint(width()/2, height()/2)));
             lastX = QCursor::pos().x();
             lastY = QCursor::pos().y();
-//            QCursor::setPos(
-            std::cout << mapToGlobal(pos()).x() << ", " << mapToGlobal(pos()).y() << std::endl;
         }
         makeCurrent();
         world->renderWorld();
