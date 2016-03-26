@@ -90,7 +90,7 @@ MainWindow::MainWindow() {
     layout->addWidget(layout2Container);
     mainContainer->setLayout(layout);
     setCentralWidget(mainContainer);
-    position = new QLabel("Position: 0 0 0");
+    position = new QLabel("");
     statusBar()->addPermanentWidget(position);
     statusBar()->addPermanentWidget(new QLabel("Objects: 0"));
     this->installEventFilter(viewport);

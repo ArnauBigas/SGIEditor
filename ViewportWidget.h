@@ -33,8 +33,8 @@ protected:
 private:
     Camera* camera = 0;
     QTimer timer;
-    int lastX;
-    int lastY;
+    int lastX = 0;
+    int lastY = 0;
     bool active = false;
 };
 

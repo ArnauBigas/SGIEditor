@@ -21,8 +21,9 @@
 #include "ViewportWidget.h"
 #include "MainWindow.h"
 
-ViewportWidget::ViewportWidget(QWidget* parent)
-    : QOpenGLWidget(parent) {
+#define clamp(x, min, max) (x < max ? x > min ? x : min : max)
+
+ViewportWidget::ViewportWidget(QWidget* parent) : QOpenGLWidget(parent) {
     QSurfaceFormat glFormat;
     glFormat.setVersion(3, 2);
     glFormat.setProfile(QSurfaceFormat::CoreProfile);
@@ -31,11 +32,7 @@ ViewportWidget::ViewportWidget(QWidget* parent)
     glFormat.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
     setFormat(glFormat);
     connect(&timer, &QTimer::timeout, this, &ViewportWidget::paintGL);
-    if(format().swapInterval() == -1) {
-        timer.setInterval(17);
-    } else {
-        timer.setInterval(17);
-    }
+        timer.setInterval(16);
     timer.start();
 }
 
@@ -75,14 +72,25 @@ void ViewportWidget::initializeGL() {
 void ViewportWidget::paintGL() {
     if(world != 0){
         if(active){
-            camera->yaw += (QCursor::pos().x() - lastX) * 0.1f;
-            camera->pitch += (QCursor::pos().y() - lastY) * 0.1f;
+            camera->yaw += (QCursor::pos().x() - lastX);
+            camera->pitch -= (QCursor::pos().y() - lastY);
+            camera->yaw = fmod(camera->yaw, 360);
+            camera->pitch = clamp(camera->pitch, -89.9f, 89.9f);
             lastX = QCursor::pos().x();
             lastY = QCursor::pos().y();
-            QCursor::setPos(this->pos());
+//            QCursor::setPos(
+            std::cout << mapToGlobal(pos()).x() << ", " << mapToGlobal(pos()).y() << std::endl;
         }
         makeCurrent();
         world->renderWorld();
+        
+        std::stringstream ss;
+        ss << "X: " << camera->position.x << "; ";
+        ss << "Y: " << camera->position.y << "; ";
+        ss << "Z: " << camera->position.z << "; ";
+        ss << "Pitch: " << camera->pitch << "; ";
+        ss << "Yaw: " << camera->yaw << "; ";
+        MainWindow::getInstance()->position->setText(ss.str().c_str());
     }
 }
 
@@ -121,6 +129,7 @@ bool ViewportWidget::eventFilter(QObject* object, QEvent* event){
                 motionZ++;
                 break;
             case Qt::Key_Space:
+            case Qt::Key_F:
                 motionY++;
                 break;
             case Qt::Key_C:
@@ -144,11 +153,5 @@ bool ViewportWidget::eventFilter(QObject* object, QEvent* event){
 
         camera->position += mov;
     }
-    std::stringstream ss;
-    ss << "Position: ";
-    ss << camera->position.x; ss << " ";
-    ss << camera->position.y; ss << " ";
-    ss << camera->position.z;
-    MainWindow::getInstance()->position->setText(ss.str().c_str());
     return false;
 }
